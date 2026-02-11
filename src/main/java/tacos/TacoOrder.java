@@ -13,7 +13,7 @@ import lombok.Data;
 @Data
 public class TacoOrder {
 
-  @NotBlank(message="Delivery name is required")
+  @NotBlank(message="Name is required")
   private String deliveryName;
 
   @NotBlank(message="Street is required")
