@@ -76,4 +76,12 @@ public class DesignTacoController {
         .filter(x -> x.getType().equals(type))
         .collect(Collectors.toList());
     }
+  
+  // handle HTTP POST request for /design to process submitted taco design form
+  @PostMapping
+  public String processTaco(Taco taco, @ModelAttribute TacoOrder tacoOrder) {
+    tacoOrder.addTaco(taco);
+    log.info("Processing taco: {}", taco);
+    return "redirect:/orders/current";
+  }
 }
