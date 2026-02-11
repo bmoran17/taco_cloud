@@ -27,7 +27,6 @@ public class OrderController {
   @PostMapping
   public String processOrder(@ModelAttribute("tacoOrder") TacoOrder order, SessionStatus sessionStatus) {
     // logs submitted order and marks session complete to clear session attributes
-    System.out.println("processOrder invoked with: " + order);
     log.info("Order submitted: {}", order);
     sessionStatus.setComplete();
     // redirects to home page after processing order
