@@ -1,5 +1,6 @@
 package tacos;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -7,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import lombok.extern.slf4j.Slf4j;
+import jakarta.validation.Valid;
 import tacos.TacoOrder;
 
 // controller to handle request for /orders/current
@@ -25,10 +27,16 @@ public class OrderController {
 
   // handles POST /orders to process submitted order form
   @PostMapping
-  public String processOrder(@ModelAttribute("tacoOrder") TacoOrder order, SessionStatus sessionStatus) {
+  public String processOrder(@Valid TacoOrder order, Errors errors, SessionStatus sessionStatus) {
+
+    if (errors.hasErrors()) {
+      return "orderForm";
+    }
+
     // logs submitted order and marks session complete to clear session attributes
     log.info("Order submitted: {}", order);
     sessionStatus.setComplete();
+
     // redirects to home page after processing order
     return "redirect:/";
   }
